@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/Rimurusss/backend-go"
 	"github.com/gofiber/fiber/v2"
+
+	"backend-go/database"
+	"backend-go/router"
 )
 
 func main() {
@@ -17,7 +19,7 @@ func main() {
 		err := c.SendString("And the API is UP!")
 		return err
 	})
-
+	router.SetupRoutes(app)
 	// Listen on PORT 3000
 	app.Listen(":3000")
 }

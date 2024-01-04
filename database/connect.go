@@ -2,18 +2,17 @@ package database
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/Rimurusss/backend-goconfig"
+	"backend-go/config"
 )
 
 var DB *mongo.Database
 
-func ConnectDB() {
+func ConnectDB() (client *mongo.Client, db *mongo.Database) {
 	// Get MongoDB URI from .env using the Config() function
 	mongoURI := config.Config("MONGO_URI")
 
@@ -25,16 +24,15 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// Check the connection
 	err = client.Ping(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Connected to MongoDB!")
-
 	// Get your database
 	dbName := config.Config("MONGO_DB_NAME")
 	DB = client.Database(dbName)
+
+	return client, DB
 }
