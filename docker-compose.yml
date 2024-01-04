@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://pixelcoin121:F0E8SWSiE5yhtAf0@ac-ls9abwa-shard-00-00.jc4c8s7.mongodb.net:27017,ac-ls9abwa-shard-00-01.jc4c8s7.mongodb.net:27017,ac-ls9abwa-shard-00-02.jc4c8s7.mongodb.net:27017/?replicaSet=atlas-o4u1d1-shard-0&ssl=true&authSource=admin"
+      
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: test0
